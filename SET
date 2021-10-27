@@ -1,0 +1,223 @@
+#include <stdio.h>
+#define max 100
+
+void display(int *p,int n);
+
+int u(int p[],int q[],int x,int y,int union_array[]);
+
+int intersection(int p[],int q[],int x,int y,int intersection_array[]);
+
+int difference(int p[],int q[],int x,int y,int difference_array[]);
+
+int sy_difference(int p[],int q[],int x,int y,int sy_array[]);
+
+
+
+
+int main() {
+  int x,y,i,n;
+  int p[max],q[max],union_array[max*2],intersection_array[max],difference_array[max],sy_array[max];
+ printf("\n————————————————————————————————————————————————");
+    printf("\n  Program to perform the Set operations");
+    printf("\n————————————————————————————————————————————————\n\n");
+  printf("How many elements for Set-1  ");
+  scanf("%d",&x);
+    for(i=0;i<x;i++)
+    {
+      printf("Enter element no. %d  ",i+1);  
+        scanf("%d",&p[i]);
+    }
+    display(p,x);
+    printf("\n");
+        printf("\nHow many elements for Set-2  ");
+    scanf("%d",&y);
+    for(i=0;i<y;i++)
+    { 
+    printf("Enter element no. %d  ",i+1);                                              scanf("%d",&q[i]);
+    }
+    display(q,y);
+    printf("\n");
+   printf("\n————————————————————————————————————————————————\n");
+    printf("The Union of sets is ");
+    n=u(p,q,x,y,union_array);
+    display(union_array,n);
+    printf("\n————————————————————————————————————————————————\n");
+    printf("\n————————————————————————————————————————————————\n");
+    printf("The Intersection of sets is ");
+    n=intersection(p,q,x,y,intersection_array);
+    display(intersection_array,n);
+    printf("\n————————————————————————————————————————————————\n");
+    printf("\n————————————————————————————————————————————————\n");
+    printf("The Difference between the sets is ");
+    n=difference(p,q,x,y,difference_array);
+     display(difference_array,n);
+    printf("\n————————————————————————————————————————————————\n");
+    printf("\n————————————————————————————————————————————————\n");
+    printf("The Symmetric Difference between the sets is ");
+    n=sy_difference(p,q,x,y,sy_array);
+     display(sy_array,n);
+     printf("\n————————————————————————————————————————————————\n");
+}
+
+
+
+
+
+void display(int *p,int n)
+{
+    int i;
+    printf("\n{");
+    for(i=0;i<n;i++)
+    {
+        printf(" %d ",p[i]);
+    }
+    printf("}");
+}
+
+
+
+
+
+
+int u(int p[],int q[],int x,int y,int union_array[])
+{
+  int i,j,k=0;
+     for(i=0;i<x;i++)
+   {
+          union_array[k]=p[i];
+          k++;
+       }
+   for(i=0;i<y;i++)
+   {
+       
+      for(j=0;j<k;j++)
+      {
+         if(union_array[j]==q[i])
+           break;
+      }
+     if(j==k)
+     {
+       union_array[k]=q[i];
+       k++;
+     }
+   }
+    return k;
+}
+
+
+
+
+
+int intersection(int p[],int q[],int x,int y,int intersection_array[])
+    {
+      int z=0;
+       for(int i=0;i<x;i++)
+    {
+        for(int j=0;j<y;j++)
+        {
+            if(p[i]==q[j])
+            {
+                intersection_array[z]=p[i];
+                z++;
+                
+            }
+            
+        }
+        
+    }
+    return z;
+    }
+
+
+
+
+int difference(int p[],int q[],int x,int y,int difference_array[])
+ {
+    int i=0,j=0,k=0;
+    while(i<x)
+    {
+       j=0;
+       while(j<y)
+    {
+      if(p[i]==q[j])
+      {
+        break;
+      }
+      j++;
+    }
+    if(j==y)
+    {
+      difference_array[k]=p[i];
+      k++;
+    }
+    i++;
+
+  }
+  return k;
+}
+    
+
+
+
+int sy_difference(int p[],int q[],int x,int y,int sy_array[])
+{
+  int i,j,l,k=0,m=0,n=0,c[max],d[max];
+  for( i=0;i<x;i++)
+    {
+        for(j=0;j<y;j++)
+        {
+            if(q[j]==p[i])
+             break;
+        }
+        if(j==y)
+        {
+            
+            for(l=0;l<k;l++)
+            {
+                if(c[l]==p[i])
+                 break;
+            }
+            if(l==k)
+            {
+                c[k]=p[i];
+                k++;
+            }
+        }
+        
+    }
+    for( i=0;i<y;i++)
+    {
+        for(j=0;j<x;j++)
+        {
+            if(q[i]==p[j])
+             break;
+        }
+        if(j==x)
+        { 
+            for(l=0;l<m;l++)
+            {
+                if(d[l]==q[i])
+                 break;
+            }
+            if(l==m)
+            {
+                d[m]=q[i];
+                m++;
+            }
+        }
+        
+    }
+    
+    for(i=0;i<k;i++)
+    {
+        sy_array[n]=c[i];
+        n++;
+    }
+    for(i=0;i<m;i++)
+    {
+        sy_array[n]=d[i];
+        n++;
+    }
+    return n;
+}
+
